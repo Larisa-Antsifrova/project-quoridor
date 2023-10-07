@@ -1,15 +1,22 @@
 <template>
-  <div class="wrapper">
-    <h2 class="title">Quoridor</h2>
+  <div>
+    <div v-if="!isGameStarted" class="button-holder">
+      <button class="button" @click="startGame">Start Game</button>
+    </div>
 
-    <GameBoard class="board" @triggerPopup="openPopup" />
+    <div v-else class="wrapper">
+      <h2 class="title">Quoridor</h2>
 
-    <h2 class="title">Walls</h2>
+      <GameBoard class="board" @triggerPopup="openPopup" />
 
-    <GameWalls class="walls" />
+      <h2 class="title">Walls</h2>
 
-    <PaymentPopup v-if="isPopupOpen" />
+      <GameWalls class="walls" />
+
+      <PaymentPopup v-if="isPopupOpen" />
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -21,13 +28,17 @@ export default {
   name: 'App',
   data(){
     return {
-      isPopupOpen: false
+      isPopupOpen: false,
+      isGameStarted: false
     }
   },
   components: { GameBoard, GameWalls, PaymentPopup},
   methods: {
     openPopup(){
       this.isPopupOpen = true
+    },
+    startGame(){
+this.isGameStarted = true
     }
 
   }
@@ -52,5 +63,24 @@ export default {
 
 .title {
   text-align: center;
+}
+
+.button-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.button {
+  outline: none;
+  border: none;
+  color: white;
+  font-size: 35px;
+  text-align: center;
+  background-color: #2a9c9d;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
 }
 </style>
