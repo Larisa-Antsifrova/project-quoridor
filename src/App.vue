@@ -2,21 +2,35 @@
   <div class="wrapper">
     <h2 class="title">Quoridor</h2>
 
-    <GameBoard class="board" />
+    <GameBoard class="board" @click="openPopup" />
 
     <h2 class="title">Walls</h2>
 
     <GameWalls class="walls" />
+
+    <PaymentPopup v-if="isPopupOpen" />
   </div>
 </template>
 
 <script>
 import GameBoard from './components/Board.vue'
 import GameWalls from './components/Walls.vue'
+import PaymentPopup from './components/PaymentPopup.vue'
 
 export default {
   name: 'App',
-  components: { GameBoard, GameWalls},
+  data(){
+    return {
+      isPopupOpen: false
+    }
+  },
+  components: { GameBoard, GameWalls, PaymentPopup},
+  methods: {
+    openPopup(){
+      this.isPopupOpen = true
+    }
+
+  }
 }
 </script>
 
