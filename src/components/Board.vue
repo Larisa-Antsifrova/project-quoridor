@@ -1,10 +1,15 @@
 <template>
   <div class="board">
     <div v-for="(row, indexRow) of board.board" :key="indexRow" class="row">
-      <div v-for="(cell, indexCell) of row" :key="indexCell" class="cell">
+      <div v-for="(cell, indexCell) of row" :key="indexCell" class="cell" :class="{available: isAvailable(cell)}">
         <div v-if="indexRow !== 0" class="up" :class="cell.up"></div>
 
         <div v-if="indexCell !== 8" class="right" :class="cell.right"></div>
+
+        <img v-if="cell.player === 'player1'" src="../assets/player-01.png" alt="01">
+
+        <img v-if="cell.player=== 'player2'" src="../assets/player-02.png" alt="02">
+
       </div>
     </div>
   </div>
@@ -16,13 +21,13 @@ import { Board } from '../classes/Board.js'
 
 const player1Start = {
   name: 'player1',
-  x: 3,
+  x: 4,
   y: 0,
 }
 
 const player2Start = {
   name: 'player2',
-  x: 3,
+  x: 4,
   y: 8,
 }
 
@@ -31,7 +36,6 @@ const SIZE = 9
 export default {
   name: 'GameBoard',
   data: function() {
-    console.log(new Board(SIZE, player1Start, player2Start))
   return {
     board: new Board(SIZE, player1Start, player2Start),
     currentPlayer: player1Start.name,
@@ -49,13 +53,15 @@ export default {
         } else {
           this.currentPlayer = 'player1'
         }
-      }
-    },
-    computed: {
+      },
       availableCells() {
         return this.board.getAvailableCells(this.currentPlayer)
+      },
+      isAvailable(cell){
+        return this.board.getAvailableCells(this.currentPlayer).includes(cell)
       }
-    }
+    },
+
   }
   }
 }
@@ -101,5 +107,9 @@ export default {
 
 .closed {
   background-color: bisque;
+}
+
+.available {
+  background-color: aquamarine;
 }
 </style>
