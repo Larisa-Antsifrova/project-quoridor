@@ -12,12 +12,12 @@ export class Board {
 
     this.board = board
     
-    this.#initBorders()
-    this.#initPlayers(player1, player2)
+    this.initBorders()
+    this.initPlayers(player1, player2)
   }
 
   getAvailableCells(player) {
-    const playerCell = this.#getPlayerCell(player)
+    const playerCell = this.getPlayerCell(player)
 
     const availableDirections = this.#directions.filter(direction => playerCell[direction.name] === 'open')
 
@@ -29,7 +29,7 @@ export class Board {
       return false
     }
 
-    if(this.#isIntersecting(cell, direction)) {
+    if(this.isIntersecting(cell, direction)) {
       return false
     }
 
@@ -49,12 +49,12 @@ export class Board {
     if(!this.getAvailableCells(player).includes(newCell)) {
       return false
     }
-    const playerCell = this.#getPlayerCell(player)
+    const playerCell = this.getPlayerCell(player)
     playerCell.player = null
     newCell.player = player
   }
 
-  #initBorders() {
+  initBorders() {
     this.board[0].forEach((cell) => cell.up = 'closed')
     this.board.at(-1).forEach((cell) => cell.down = 'closed')
     this.board.forEach(row => {
@@ -63,17 +63,17 @@ export class Board {
     })
   }
 
-  #initPlayers(player1, player2) {
-    this.board[player1.y][player1.x] = player1.name
-    this.board[player2.y][player2.x] = player2.name
+  initPlayers(player1, player2) {
+    this.board[player1.y][player1.x].player = player1.name
+    this.board[player2.y][player2.x].player = player2.name
   }
 
-  #getPlayerCell(player) {
+  getPlayerCell(player) {
     const playerRow = this.board.find(row => row.includes(cell => cell.player === player))
     return playerRow.find(cell => cell.player === player)
   }
 
-  #isIntersecting(cell, direction) {
+  isIntersecting(cell, direction) {
     if(direction === 'up') {
       return cell.right === 'closed' && this.board[cell.y - 1]?.[cell.x] === 'closed'
     } else {
