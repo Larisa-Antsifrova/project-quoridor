@@ -2,7 +2,7 @@
   <div class="wrapper">
     <h2 class="title">Quoridor</h2>
 
-    <GameBoard class="board" :board="board" />
+    <GameBoard class="board" />
 
     <h2 class="title">Walls</h2>
 
@@ -11,24 +11,12 @@
 </template>
 
 <script>
-import { initBoard } from './services/game.js'
 import GameBoard from './components/Board.vue'
 import GameWalls from './components/Walls.vue'
 
 export default {
   name: 'App',
   components: { GameBoard, GameWalls},
-  data: function() {
-  return {
-    board: initBoard(),
-    methods: {
-      startGame() {
-        this.board = initBoard()
-      }
-    }
-  }
-
-}
 }
 </script>
 
