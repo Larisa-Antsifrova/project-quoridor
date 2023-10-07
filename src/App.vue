@@ -13,6 +13,8 @@
 
       <GameWalls class="walls" />
 
+      <a class="link" href="https://www.google.com/">Contact Support</a>
+
       <PaymentPopup v-if="isPopupOpen" />
     </div>
   </div>
@@ -82,5 +84,9 @@ this.isGameStarted = true
   padding: 8px 16px;
   border-radius: 8px;
   cursor: pointer;
+}
+
+.link {
+
 }
 </style>
