@@ -1,16 +1,25 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
+  {{board}}
   <HelloWorld msg="Welcome to Your Vue.js App"/>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import {initBoard} from './services/game.js'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data: function() {
+  return {
+    board: initBoard(),
+    methods: {
+      startGame() {
+        this.board = initBoard()
+      }
+    }
   }
+
+}
 }
 </script>
 

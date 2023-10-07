@@ -8,6 +8,8 @@ export const initBoard = (size = 9) => {
   }
 
   initBorders(board)
+
+  return board
 }
 
 const initBorders = (board) => {
