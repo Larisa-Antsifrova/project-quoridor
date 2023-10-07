@@ -3,10 +3,12 @@
     <div v-for="(row, indexRow) of board.board" :key="indexRow" class="row">
       <div v-for="(cell, indexCell) of row" :key="indexCell"
            class="cell"
+           :class="{available: availableCells.includes(cell)}" 
+           @click="move('movePlayer', cell)"
       >
-        <div v-if="indexRow !== 0" class="up" :class="cell.up"></div>
+        <div v-if="indexRow !== 0" class="up" :class="cell.up" @click.stop="move('placeWall', cell, 'up')"></div>
 
-        <div v-if="indexCell !== 8" class="right" :class="cell.right"></div>
+        <div v-if="indexCell !== 8" class="right" :class="cell.right" @click.stop="move('placeWall', cell, 'right')"></div>
 
         <img v-if="cell.player === 'player1'" src="../assets/player-01.png" alt="01">
 
@@ -41,6 +43,7 @@ export default {
   return {
     board: new Board(SIZE, player1Start, player2Start),
     currentPlayer: player1Start.name,
+    moves: 0,
   }
   },
   methods: {
@@ -48,6 +51,8 @@ export default {
       this.board = new Board(SIZE, player1Start, player2Start)
     },
     move(moveType, cell, direction) {
+      this.moves++
+
       if(!this.board[moveType](this.currentPlayer, cell, direction)) {
         return
       }
@@ -63,6 +68,13 @@ export default {
     availableCells() {
       return this.board.getAvailableCells(this.currentPlayer)
     },
+  },
+  watch: {
+    moves(val) {
+      if(val === 3) {
+        this.$emit('triggerPopup')
+      }
+    }
   }
 }
 </script>

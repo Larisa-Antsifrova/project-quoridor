@@ -19,9 +19,11 @@ export class Board {
   getAvailableCells(player) {
     const playerCell = this.getPlayerCell(player)
 
-    const availableDirections = this.#directions.filter(direction => playerCell[direction.name] === 'open')
+    const availableDirections = this.directions.filter(direction => playerCell[direction.name] === 'open')
 
-    return availableDirections.map(direction => this.board[playerCell.y + direction.shift.y][playerCell.x + direction.shift.x])
+    return availableDirections
+      .map(direction => this.board[playerCell.y + direction.shift.y][playerCell.x + direction.shift.x])
+      .filter(cell => cell.player === null)
   }
 
   placeWall(_player, cell, direction) {
@@ -43,6 +45,7 @@ export class Board {
 
     cell[direction] = 'closed'
     nextCell[direction] = 'closed'
+    return true
   }
 
   movePlayer(player, newCell) {
@@ -52,6 +55,7 @@ export class Board {
     const playerCell = this.getPlayerCell(player)
     playerCell.player = null
     newCell.player = player
+    return true
   }
 
   initBorders() {
@@ -76,13 +80,15 @@ export class Board {
 
   isIntersecting(cell, direction) {
     if(direction === 'up') {
-      return cell.right === 'closed' && this.board[cell.y - 1]?.[cell.x] === 'closed'
+      console.log(cell, this.board[cell.y - 1]?.[cell.x])
+      return cell.right === 'closed' && this.board[cell.y - 1]?.[cell.x].right === 'closed'
     } else {
-      return cell.down === 'closed' && this.board[cell.y][cell.x + 1] === 'closed'
+      console.log(cell, this.board[cell.y][cell.x + 1])
+      return cell.down === 'closed' && this.board[cell.y][cell.x + 1].down === 'closed'
     }
   }
 
-  #directions = [
+  directions = [
     {name: 'up', shift: {x: 0, y: -1}},
     {name: 'right', shift: {x: 1, y: 0}},
     {name: 'down', shift: {x: 0, y: 1}},

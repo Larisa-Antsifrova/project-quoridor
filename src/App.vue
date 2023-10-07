@@ -2,7 +2,7 @@
   <div class="wrapper">
     <h2 class="title">Quoridor</h2>
 
-    <GameBoard class="board" @click="openPopup" />
+    <GameBoard class="board" @triggerPopup="openPopup" />
 
     <h2 class="title">Walls</h2>
 
