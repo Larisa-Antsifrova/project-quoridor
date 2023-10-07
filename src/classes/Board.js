@@ -69,7 +69,8 @@ export class Board {
   }
 
   getPlayerCell(player) {
-    const playerRow = this.board.find(row => row.includes(cell => cell.player === player))
+    const playerRow = this.board.find(row => row.find(cell => cell.player === player))
+
     return playerRow.find(cell => cell.player === player)
   }
 

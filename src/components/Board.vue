@@ -1,7 +1,9 @@
 <template>
   <div class="board">
     <div v-for="(row, indexRow) of board.board" :key="indexRow" class="row">
-      <div v-for="(cell, indexCell) of row" :key="indexCell" class="cell" :class="{available: isAvailable(cell)}">
+      <div v-for="(cell, indexCell) of row" :key="indexCell"
+           class="cell"
+      >
         <div v-if="indexRow !== 0" class="up" :class="cell.up"></div>
 
         <div v-if="indexCell !== 8" class="right" :class="cell.right"></div>
@@ -39,30 +41,28 @@ export default {
   return {
     board: new Board(SIZE, player1Start, player2Start),
     currentPlayer: player1Start.name,
-    methods: {
-      resetGame() {
-        this.board = new Board(SIZE, player1Start, player2Start)
-      },
-      move(moveType, cell, direction) {
-        if(!this.board[moveType](this.currentPlayer, cell, direction)) {
-          return
-        }
+  }
+  },
+  methods: {
+    resetGame() {
+      this.board = new Board(SIZE, player1Start, player2Start)
+    },
+    move(moveType, cell, direction) {
+      if(!this.board[moveType](this.currentPlayer, cell, direction)) {
+        return
+      }
 
-        if (this.currentPlayer === 'player1') {
-          this.currentPlayer = 'player2'
-        } else {
-          this.currentPlayer = 'player1'
-        }
-      },
-      availableCells() {
-        return this.board.getAvailableCells(this.currentPlayer)
-      },
-      isAvailable(cell){
-        return this.board.getAvailableCells(this.currentPlayer).includes(cell)
+      if (this.currentPlayer === 'player1') {
+        this.currentPlayer = 'player2'
+      } else {
+        this.currentPlayer = 'player1'
       }
     },
-
-  }
+  },
+  computed: {
+    availableCells() {
+      return this.board.getAvailableCells(this.currentPlayer)
+    },
   }
 }
 </script>
