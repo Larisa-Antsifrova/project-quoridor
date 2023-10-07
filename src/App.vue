@@ -1,14 +1,16 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  {{board}}
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="wrapper">
+    <GameBoard class="board" :board="board" />
+  </div>
 </template>
 
 <script>
-import {initBoard} from './services/game.js'
+import { initBoard } from './services/game.js'
+import GameBoard from './components/Board.vue'
 
 export default {
   name: 'App',
+  components: {GameBoard},
   data: function() {
   return {
     board: initBoard(),
@@ -24,12 +26,11 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.board {
+  margin: 0 auto;
+}
+
+.wrapper {
+  height: 60vh;
 }
 </style>
